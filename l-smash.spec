@@ -1,18 +1,11 @@
-%define		rev	823
-%define		hash	55a4589
-
-Summary:	Yet another opensource mp4 handler™
+Summary:	Yet another opensource mp4 handler
 Name:		l-smash
-Version:	%{rev}.%{hash}
+Version:	1.13.27
 Release:	1
 License:	BSD-like
 Group:		Libraries
-# git clone https://code.google.com/p/l-smash/
-# git archive --format=tar --prefix=l-smash-rev.hash/ HEAD | xz -c > l-smash-rev.hash.tar.xz
-# rev -> git rev-list HEAD | wc -l
-# hash -> git describe --always
-Source0:	%{name}-%{version}.tar.xz
-# Source0-md5:	b58c065215107b1e8f61072ca0866d52
+Source0:	https://github.com/l-smash/l-smash/archive/v%{version}.tar.gz
+# Source0-md5:	cdcd065bfe97adbfe2f41cb3620bc294
 URL:		http://code.google.com/p/l-smash/
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -37,10 +30,6 @@ This is the package containing the header files for L-SMASH library.
 %prep
 %setup -q
 
-%{__sed} -i -e "s|^REV.*|REV=%{rev}|" \
-	-i -e "s|^HASH.*|HASH=%{hash}|" \
-	configure
-
 %build
 ./configure \
 	--prefix=%{_prefix}		\
@@ -59,6 +48,8 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT	\
 	STRIP=/usr/bin/true
 
+chmod +x $RPM_BUILD_ROOT%{_libdir}/*
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -75,10 +66,11 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/liblsmash.so
+%attr(755,root,root) %{_libdir}/liblsmash.so.1
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/liblsmash.so
 %{_includedir}/*.h
 %{_pkgconfigdir}/*.pc
 
