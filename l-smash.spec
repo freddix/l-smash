@@ -1,13 +1,14 @@
 Summary:	Yet another opensource mp4 handler
 Name:		l-smash
 Version:	1.13.27
-Release:	1
+Release:	2
+Epoch:		1
 License:	BSD-like
 Group:		Libraries
 Source0:	https://github.com/l-smash/l-smash/archive/v%{version}.tar.gz
 # Source0-md5:	cdcd065bfe97adbfe2f41cb3620bc294
 URL:		http://code.google.com/p/l-smash/
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -22,7 +23,7 @@ Group:		Libraries
 %package devel
 Summary:	Header files for L-SMASH library
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description devel
 This is the package containing the header files for L-SMASH library.
